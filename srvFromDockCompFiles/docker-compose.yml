@@ -1,0 +1,18 @@
+version: "3"
+services:
+  psql-16-test:
+    container_name: psql-16-test
+    image: psql-16-test:1.0
+    restart: always # указываем как часто можно перезагружаться контейнеру в случае ошибки
+    environment: # настройка среды
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      PGDATA: $PGDATA
+      PG_USER: $PG_USER
+    volumes:
+      - "./_init_db:/docker-entrypoint-initdb.d"
+      - "./_archive_db:/docker-archivedb.d"
+      - "./_pgdata-test:/var/lib/postgresql/data"
+    ports:
+      - 54333:5432
